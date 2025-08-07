@@ -1,0 +1,17 @@
+# Frontend ignores (app)
+app/node_modules/
+app/.env
+app/build/
+app/dist/
+
+# Backend ignores (server)
+server/node_modules/
+server/.env
+server/logs/
+server/dist/
+
+# General ignores
+.DS_Store
+*.log
+npm-debug.log*
+yarn-error.log
