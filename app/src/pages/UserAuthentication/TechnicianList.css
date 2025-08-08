@@ -1,0 +1,83 @@
+.tech-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tech-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.tech-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.tech-filters input,
+.tech-filters select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.tech-filters button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tech-filters button:hover {
+    background-color: #0056b3;
+}
+
+.tech-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.tech-card {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tech-card h3 {
+    margin-top: 0;
+}
+
+.tech-card p {
+    margin: 6px 0;
+}
+
+.request-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.request-form textarea {
+    width: 100%;
+    min-height: 60px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 6px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.success-msg {
+    color: green;
+    font-weight: bold;
+}

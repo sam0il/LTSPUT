@@ -4,7 +4,8 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const server_api = axios.create({
-    baseURL: 'http://88.200.63.148:5022'
+    baseURL: 'http://88.200.63.148:5022',
+    withCredentials: true, // ✅ This is crucial for sending cookies (sessions)
 });
 
 export default server_api;
