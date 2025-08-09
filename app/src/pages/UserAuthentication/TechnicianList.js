@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import server_api from '../../api/server_api';
 import './TechnicianList.css';
 
@@ -6,11 +6,12 @@ function TechnicianList() {
     const [technicians, setTechnicians] = useState([]);
     const [nameFilter, setNameFilter] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('');
-    const [requestFormVisible, setRequestFormVisible] = useState(null); // Technician ID
+    const [requestFormVisible, setRequestFormVisible] = useState(null);
     const [requestMessage, setRequestMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const fetchTechnicians = async () => {
+    // Fetch technicians with useCallback to memoize the function
+    const fetchTechnicians = useCallback(async () => {
         try {
             const { data } = await server_api.get('/user/technicians', {
                 params: {
@@ -19,20 +20,17 @@ function TechnicianList() {
                 }
             });
             if (data.success) {
-                setTechnicians(data.technicians);
+                setTechnicians(data.technicians || []);
             }
         } catch (err) {
             console.error('Error fetching technicians:', err);
         }
-    };
+    }, [nameFilter, categoryFilter]); // Dependencies
 
+    // Single useEffect for fetching technicians
     useEffect(() => {
         fetchTechnicians();
-    }, []);
-
-    const handleFilter = () => {
-        fetchTechnicians();
-    };
+    }, [fetchTechnicians]); // Now we can safely include fetchTechnicians as a dependency
 
     const toggleRequestForm = (techId) => {
         setRequestFormVisible(prev => (prev === techId ? null : techId));
@@ -85,7 +83,7 @@ function TechnicianList() {
                     <option value="Console">Console</option>
                     <option value="PC">PC</option>
                 </select>
-                <button onClick={handleFilter}>🔍 Filter</button>
+                <button onClick={fetchTechnicians}>🔍 Filter</button>
             </div>
 
             <div className="tech-list">

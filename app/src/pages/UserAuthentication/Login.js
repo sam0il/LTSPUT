@@ -10,20 +10,19 @@ function Login() {
     const navigate = useNavigate();
     
     const handleLogin = async () => {
-        try {
-            const { data } = await server_api.post('/user/login', {
-                name:name,
-                password:password
-            });
+    try {
+        const { data } = await server_api.post("/user/login", { name, password });
 
-            if(data.success){
-                navigate("/")
-            }
-            
-        } catch (err) {
-            console.log(err);
+        if (data.success) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            navigate("/");
+        } else {
+            alert(data.message);
         }
-    };
+    } catch (error) {
+        console.error(error);
+    }
+};
 
    return (
     <div className="auth-container">

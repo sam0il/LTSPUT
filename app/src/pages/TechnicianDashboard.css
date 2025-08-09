@@ -1,0 +1,89 @@
+/* TechnicianDashboard.css */
+.technician-dashboard {
+  padding: 20px;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffcdd2;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #388e3c;
+  background-color: #c8e6c9;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.request-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.request-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-pending { background-color: #ff9800; color: white; }
+.status-accepted { background-color: #4caf50; color: white; }
+.status-declined { background-color: #f44336; color: white; }
+.status-finished { background-color: #2196f3; color: white; }
+
+.request-details {
+  margin-bottom: 15px;
+}
+
+.request-details p {
+  margin: 5px 0;
+}
+
+.request-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.action-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.accept-btn { background-color: #4CAF50; color: white; }
+.decline-btn { background-color: #f44336; color: white; }
+.finish-btn { background-color: #2196F3; color: white; }
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+.info-note {
+  font-style: italic;
+  color: #757575;
+}

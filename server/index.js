@@ -36,14 +36,16 @@ const session = require('express-session')
 
 app.set('trust proxy', 1)
 
+// Update session configuration
 app.use(session({
   secret: 'some-secret',
   resave: true,
   saveUninitialized: true,
-  cookie: { 
+  cookie: {
     secure: false,
     httpOnly: true,
-    sameSite: 'lax'
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
 
@@ -55,6 +57,9 @@ app.use('/user', user);
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Server is working!' });
 });
+
+const technicianRoutes = require('./routes/technician');
+app.use('/technician', technicianRoutes);
 
 // Start server
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
