@@ -15,7 +15,6 @@ const RateRequestForm = ({ requestId, userId, onRated }) => {
         stars,
         comment,
       });
-      alert("Thanks for your feedback!");
       
       if (onRated) onRated();
 

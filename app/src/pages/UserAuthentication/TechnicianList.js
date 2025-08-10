@@ -62,7 +62,7 @@ function TechnicianList() {
         }
     };
 
-    return (
+     return (
         <div className="tech-container">
             <h2 className="tech-title">🔧 Browse Local Technicians</h2>
 
@@ -90,30 +90,38 @@ function TechnicianList() {
                 {technicians.length === 0 ? (
                     <p>No technicians found.</p>
                 ) : (
-                    technicians.map(t => (
-                        <div key={t.id} className="tech-card">
-                            <h3>{t.name}</h3>
-                            <p><strong>Category:</strong> {t.category}</p>
+                    technicians.map(t => {
+                        console.log(t.name, 'has_badge:', t.has_badge, typeof t.has_badge);
+                        return (
+                            <div key={t.id} className="tech-card">
+                                <h3>
+                                    {t.name}{' '}
+                                    {Number(t.has_badge) === 1 && (
+                                        <span className="badge">⭐ Top Rated</span>
+                                    )}
+                                </h3>
+                                <p><strong>Category:</strong> {t.category}</p>
 
-                            <button onClick={() => toggleRequestForm(t.id)}>
-                                {requestFormVisible === t.id ? 'Cancel' : 'Request Service'}
-                            </button>
+                                <button onClick={() => toggleRequestForm(t.id)}>
+                                    {requestFormVisible === t.id ? 'Cancel' : 'Request Service'}
+                                </button>
 
-                            {requestFormVisible === t.id && (
-                                <div className="request-form">
-                                    <textarea
-                                        placeholder="Describe your issue..."
-                                        value={requestMessage}
-                                        onChange={e => setRequestMessage(e.target.value)}
-                                    />
-                                    <button onClick={() => handleSubmitRequest(t.id)}>
-                                        Submit Request
-                                    </button>
-                                    {successMessage && <p className="success-msg">{successMessage}</p>}
-                                </div>
-                            )}
-                        </div>
-                    ))
+                                {requestFormVisible === t.id && (
+                                    <div className="request-form">
+                                        <textarea
+                                            placeholder="Describe your issue..."
+                                            value={requestMessage}
+                                            onChange={e => setRequestMessage(e.target.value)}
+                                        />
+                                        <button onClick={() => handleSubmitRequest(t.id)}>
+                                            Submit Request
+                                        </button>
+                                        {successMessage && <p className="success-msg">{successMessage}</p>}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })
                 )}
             </div>
         </div>

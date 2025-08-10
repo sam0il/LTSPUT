@@ -81,3 +81,9 @@
     color: green;
     font-weight: bold;
 }
+
+.badge {
+  color: gold;
+  font-weight: bold;
+  margin-left: 6px;
+}

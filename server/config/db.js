@@ -1,5 +1,6 @@
 // server/config/db.js
 const mysql = require('mysql2');
+const BADGE_THRESHOLD = 4.5;
 
 const conn = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -66,23 +67,43 @@ dataPool.registerUser=(name, password) => {
 }
 
 dataPool.getFilteredTechnicians = (name, category) => {
-    let sql = `SELECT id, name, category FROM SISIII2025_89231015_technicians WHERE 1=1`;
+    let sql = `
+        SELECT t.id, t.name, t.category,
+               ROUND(AVG(r.stars), 2) AS avg_stars,
+               CASE 
+                   WHEN AVG(r.stars) >= 4.5 AND COUNT(r.id) >= 3 THEN 1
+                   ELSE 0
+               END AS has_badge
+        FROM SISIII2025_89231015_technicians t
+        LEFT JOIN SISIII2025_89231015_ratings r ON t.id = r.technician_id
+        WHERE 1=1
+    `;
     const params = [];
 
     if (name) {
-        sql += ` AND name LIKE ?`;
+        sql += ` AND t.name LIKE ?`;
         params.push(`%${name}%`);
     }
 
     if (category) {
-        sql += ` AND category = ?`;
+        sql += ` AND t.category = ?`;
         params.push(category);
     }
 
+    sql += ` GROUP BY t.id, t.name, t.category`;
+
     return new Promise((resolve, reject) => {
+        console.log('Executing SQL:', sql);
+        console.log('With params:', params);
+
         conn.query(sql, params, (err, results) => {
-            if (err) reject(err);
-            else resolve(results);
+            if (err) {
+                console.error('DB Query error:', err);
+                reject(err);
+            } else {
+                console.log('DB Query returned rows:', results.length);
+                resolve(results);
+            }
         });
     });
 };
@@ -90,7 +111,6 @@ dataPool.getFilteredTechnicians = (name, category) => {
 
 
 
-// In db.js
 dataPool.becomeTechnician = (userId, category) => {
   return new Promise((resolve, reject) => {
     // First get user info
@@ -188,14 +208,6 @@ dataPool.acceptServiceRequest = (requestId) => {
         });
     });
 };
-
-// dataPool.submitReview = (requestId, userId, stars, comment) => {
-//   const sql = `
-//     INSERT INTO service_reviews (request_id, user_id, stars, comment)
-//     VALUES (?, ?, ?, ?)
-//   `;
-//   return new Promise(...);
-// };
 
 dataPool.finishServiceRequest = (requestId) => {
   return new Promise((resolve, reject) => {

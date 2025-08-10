@@ -94,6 +94,9 @@ router.get('/technicians', async (req, res) => {
 });
 
 
+
+
+
 // In routes/user.js
 router.post('/become-technician', async (req, res) => {
   if (!req.session.user) {
