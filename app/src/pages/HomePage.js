@@ -1,10 +1,8 @@
-// app/src/pages/HomePage.js
 import './HomePage.css';
 import React, { useEffect, useState } from 'react';
 import server_api from '../api/server_api.js';
 import TechnicianList from './UserAuthentication/TechnicianList.js';
 import TechnicianDashboard from './TechnicianDashboard';
-import MyRequests from './MyRequest';  // Changed import name to match component
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
@@ -14,7 +12,6 @@ const HomePage = () => {
   const [role, setRole] = useState(null);
   const [userId, setUserId] = useState(null);  // Track userId separately
 
-  // In HomePage.js useEffect
 useEffect(() => {
   const fetchSession = async () => {
     try {
@@ -68,10 +65,8 @@ const handleBecomeTechnician = async () => {
 
   return (
     <div className="home-container">
-      {/* LEFT SIDE - Main Content */}
       <div className="main-content">
         <h1 className="home-title">Welcome to the LTSPUT!</h1>
-
         {role !== 'technician' && (
           <div className="become-tech-section">
             <button 
@@ -80,7 +75,6 @@ const handleBecomeTechnician = async () => {
             >
               {showForm ? 'Cancel' : 'Become a Technician'}
             </button>
-
             {showForm && (
               <div className="form-section">
                 <label>Choose your skill category:</label>
@@ -116,8 +110,6 @@ const handleBecomeTechnician = async () => {
           <button className="my-requests-button">📄 My Requests</button>
         </Link>
       </div>
-
-      {/* RIGHT SIDE - Technician Sidebar */}
       {role === 'technician' && (
         <div className="technician-sidebar">
           <h2>Technician Dashboard</h2>

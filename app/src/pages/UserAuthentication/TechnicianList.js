@@ -83,7 +83,6 @@ function TechnicianList() {
                     <option value="Console">Console</option>
                     <option value="PC">PC</option>
                 </select>
-                <button onClick={fetchTechnicians}>🔍 Filter</button>
             </div>
 
             <div className="tech-list">

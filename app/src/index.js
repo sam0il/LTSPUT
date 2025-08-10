@@ -8,7 +8,7 @@ function importAll(r){
     r.keys().forEach(r);
 }
 
-// automatically import all CSS files in the './components folder'
+// automatically import all CSS files in the './pages folder'
 importAll(require.context('./pages', true, /.css$/));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

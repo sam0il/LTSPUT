@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import server_api from '../api/server_api';
-import { Link } from 'react-router-dom'; // ADDED IMPORT
+import { Link } from 'react-router-dom';
 
 function MyRequests() {
   const [requests, setRequests] = useState([]);

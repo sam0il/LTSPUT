@@ -13,7 +13,7 @@ function requireLogin(req, res, next) {
 router.post('/login', async (req, res) => {
   const { name, password } = req.body;
   try {
-    const users = await DB.authenticateLogin(name, password);
+    const users = await DB.authenticateLogin(name, password); //1
     if (users.length === 0) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
@@ -51,7 +51,7 @@ router.get('/session', (req, res) => {
 router.post('/register', async (req, res) => {
     const {name, password} = req.body;
     try {
-        const result = await DB.registerUser(name, password);
+        const result = await DB.registerUser(name, password); //2
         if (result.affectedRows > 0) {
             return res.json({ 
                 message: 'Register successful', 
@@ -85,7 +85,7 @@ router.post('/register', async (req, res) => {
 router.get('/technicians', async (req, res) => {
     const { name, category } = req.query;
     try {
-        const technicians = await DB.getFilteredTechnicians(name, category);
+        const technicians = await DB.getFilteredTechnicians(name, category); //3
         res.json({ success: true, technicians });
     } catch (err) {
         console.error('Error fetching technicians:', err);
@@ -106,7 +106,7 @@ router.post('/become-technician', async (req, res) => {
   const { category } = req.body;
 
   try {
-    const result = await DB.becomeTechnician(userId, category);
+    const result = await DB.becomeTechnician(userId, category); //4
 
     // Update session to reflect technician status
     req.session.user.isTechnician = true;
@@ -145,7 +145,7 @@ router.post('/request-service', async (req, res) => {
     const userId = req.session.user.id;
 
     try {
-        const result = await DB.createServiceRequest(userId, technicianId, description);
+        const result = await DB.createServiceRequest(userId, technicianId, description); //5
         res.json({ success: true, message: 'Service request sent!', requestId: result.insertId });
     } catch (err) {
         console.error('Service request error:', err);
@@ -162,7 +162,7 @@ router.get('/my-requests', async (req, res) => {
     const userId = req.session.user.id;
 
     try {
-        const requests = await DB.getUserServiceRequests(userId);
+        const requests = await DB.getUserServiceRequests(userId); //6
         res.json({ success: true, requests });
     } catch (err) {
         console.error('Error fetching user requests:', err);
@@ -178,7 +178,7 @@ router.post('/rate', requireLogin, async (req, res) => {
 
   try {
     // Verify request using db.js function
-    const request = await DB.canRateRequest(requestId, userId);
+    const request = await DB.canRateRequest(requestId, userId); //7
     
     if (!request || request.status !== 'finished') {
       return res.status(400).json({ 
@@ -188,7 +188,7 @@ router.post('/rate', requireLogin, async (req, res) => {
     }
 
     // Submit rating using db.js function
-    await DB.createRating(
+    await DB.createRating( //8
       requestId,
       userId,
       request.technician_id,
@@ -210,7 +210,7 @@ router.get('/request/:id', requireLogin, async (req, res) => {
   const userId = req.session.user.id;
 
   try {
-    const requestDetails = await DB.getRequestDetailsForUser(requestId, userId);
+    const requestDetails = await DB.getRequestDetailsForUser(requestId, userId); //9
     
     if (requestDetails) {
       res.json({ 

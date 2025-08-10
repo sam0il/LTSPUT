@@ -16,7 +16,7 @@ async function handleStatusChange(req, res, requiredStatus, newStatus) {
 
   try {
     // Verify technician owns the request and that it's in requiredStatus
-    const check = await DB.canChangeStatus(requestId, technicianId, requiredStatus, newStatus);
+    const check = await DB.canChangeStatus(requestId, technicianId, requiredStatus, newStatus); // 1
     if (!check || !check.canChange) {
       return res.status(403).json({
         success: false,
@@ -25,7 +25,7 @@ async function handleStatusChange(req, res, requiredStatus, newStatus) {
     }
 
     // Update status
-    const success = await DB.updateRequestStatus(requestId, newStatus);
+    const success = await DB.updateRequestStatus(requestId, newStatus); //2
     res.json({
       success: !!success,
       message: success ? `Request ${newStatus}` : `Failed to update status`
@@ -49,7 +49,7 @@ router.get('/requests', requireLogin, async (req, res) => {
   }
 
   try {
-    const requests = await DB.getTechnicianServiceRequests(technicianId);
+    const requests = await DB.getTechnicianServiceRequests(technicianId); //3
     res.json({ success: true, requests });
   } catch (err) {
     console.error('Error fetching technician requests:', err);
@@ -74,7 +74,7 @@ router.get('/:id/requests', async (req, res) => {
   const technicianId = req.params.id;
 
   try {
-    const requests = await DB.getTechnicianServiceRequests(technicianId);
+    const requests = await DB.getTechnicianServiceRequests(technicianId); // 3 the same
     res.json({ success: true, requests });
   } catch (err) {
     console.error('Error fetching technician requests by ID:', err);

@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage.js';
 import MyRequest from './pages/MyRequest.js';
 import TechnicianDashboard from './pages/TechnicianDashboard.js';
 import RateRequestWrapper from './pages/RateRequestWrapper.js';
-import RateRequestPage from './pages/RateRequestPage';
 function App() {
   return (
     <Router>
@@ -16,7 +15,6 @@ function App() {
         <Route path="/requests" element={<MyRequest />} />
         <Route path="/technician/dashboard" element={<TechnicianDashboard />} />
         <Route path="/rate/:requestId" element={<RateRequestWrapper />} />
-         <Route path="/rate/:requestId" element={<RateRequestPage />} />
       </Routes>
     </Router>
   );

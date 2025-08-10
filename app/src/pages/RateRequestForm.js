@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../api/server_api';
-import { useNavigate } from 'react-router-dom';  // Fix this import
+import { useNavigate } from 'react-router-dom';
+import './RateRequestForm.css'; 
 
 const RateRequestForm = ({ requestId, userId, onRated }) => {
   const [stars, setStars] = useState(5);
@@ -25,7 +26,7 @@ const RateRequestForm = ({ requestId, userId, onRated }) => {
   };
 
   return (
-    <div>
+    <div  className="rate-form-container">
       <h4>Rate this service</h4>
       <label>
         Stars (1-5):

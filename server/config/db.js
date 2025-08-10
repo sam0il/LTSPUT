@@ -18,17 +18,6 @@ conn.connect((err) => {
 });
 
  let dataPool = {};
-// dataPool.authenticateLogin = (name, password) => {
-//     return new Promise( (resolve, reject) => {
-//         conn.query(`SELECT * FROM SISIII2025_89231015_users WHERE name = ? and password = ?`, 
-//             [name, password], (err, res)=>{
-//                 if(err){
-//                     reject(err);
-//                 }
-//                 resolve(res);
-//             })
-//     })
-// }
 
 dataPool.authenticateLogin = (name, password) => {
     return new Promise((resolve, reject) => {
@@ -51,7 +40,6 @@ dataPool.authenticateLogin = (name, password) => {
         );
     });
 };
-
 
 
 dataPool.registerUser=(name, password) => {
@@ -195,34 +183,6 @@ dataPool.getTechnicianServiceRequests = (technicianId) => {
     });
 };
 
-dataPool.acceptServiceRequest = (requestId) => {
-    return new Promise((resolve, reject) => {
-        const sql = `
-            UPDATE SISIII2025_89231015_service_requests
-            SET status = 'accepted'
-            WHERE id = ?
-        `;
-        conn.query(sql, [requestId], (err, res) => {
-            if (err) reject(err);
-            else resolve(res);
-        });
-    });
-};
-
-dataPool.finishServiceRequest = (requestId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      UPDATE SISIII2025_89231015_service_requests
-      SET status = 'finished'
-      WHERE id = ?
-    `;
-    conn.query(sql, [requestId], (err, res) => {
-      if (err) reject(err);
-      else resolve(res);
-    });
-  });
-};
-
 
 dataPool.canRateRequest = (requestId, userId) => {
   return new Promise((resolve, reject) => {
@@ -239,21 +199,8 @@ dataPool.canRateRequest = (requestId, userId) => {
 };
 
 
-dataPool.canTechnicianFinishRequest = (requestId, technicianId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT id 
-      FROM SISIII2025_89231015_service_requests 
-      WHERE id = ? AND technician_id = ? AND status = 'accepted'
-    `;
-    conn.query(sql, [requestId, technicianId], (err, results) => {
-      if (err) reject(err);
-      else resolve(results.length > 0);
-    });
-  });
-};
 
-dataPool.createRating = (requestId, userId, technicianId, stars, comment, repair_lasted) => {
+dataPool.createRating = (requestId, userId, technicianId, stars, comment, repair_lasted) => { //used
   return new Promise((resolve, reject) => {
     const sql = `
       INSERT INTO SISIII2025_89231015_ratings 
@@ -275,36 +222,6 @@ dataPool.createRating = (requestId, userId, technicianId, stars, comment, repair
 };
 
 
-// Decline service request
-// Add decline function
-dataPool.declineServiceRequest = (requestId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      UPDATE SISIII2025_89231015_service_requests
-      SET status = 'declined'
-      WHERE id = ?
-    `;
-    conn.query(sql, [requestId], (err, res) => {
-      if (err) reject(err);
-      else resolve(res.affectedRows > 0);
-    });
-  });
-};
-
-dataPool.canTechnicianUpdateRequest = (requestId, technicianId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT id 
-      FROM SISIII2025_89231015_service_requests 
-      WHERE id = ? AND technician_id = ? AND status = 'pending'
-    `;
-    conn.query(sql, [requestId, technicianId], (err, results) => {
-      if (err) reject(err);
-      else resolve(results.length > 0);
-    });
-  });
-};
-
 dataPool.getRequestDetailsForUser = (requestId, userId) => {
   return new Promise((resolve, reject) => {
     const sql = `
@@ -320,20 +237,6 @@ dataPool.getRequestDetailsForUser = (requestId, userId) => {
   });
 };
 
-
-dataPool.isRequestOwner = (requestId, technicianId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT id 
-      FROM SISIII2025_89231015_service_requests 
-      WHERE id = ? AND technician_id = ?
-    `;
-    conn.query(sql, [requestId, technicianId], (err, results) => {
-      if (err) reject(err);
-      else resolve(results.length > 0);
-    });
-  });
-};
 
 dataPool.updateRequestStatus = (requestId, status) => {
   const validStatuses = ['pending', 'accepted', 'declined', 'finished'];

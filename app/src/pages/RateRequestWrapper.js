@@ -1,14 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import RateRequestForm from './RateRequestForm';
+import RateRequestForm from './RateRequestForm.js'
 
 const RateRequestFormWrapper = () => {
   const { requestId } = useParams();
-  const userId = sessionStorage.getItem('userId'); // Or your auth system
+  const userId = sessionStorage.getItem('userId'); 
 
   return (
     <div>
-      <h2>Rate a Finished Service</h2>
       <RateRequestForm requestId={requestId} userId={userId} />
     </div>
   );

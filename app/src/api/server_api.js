@@ -1,4 +1,3 @@
-// app/src/api/server_api.js
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;

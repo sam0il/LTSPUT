@@ -1,5 +1,3 @@
-// app/src/pages/UserAuthentication/Register.js
-
 import React, { useState } from 'react';
 import server_api from '../../api/server_api';
 import { useNavigate } from 'react-router';
@@ -19,7 +17,7 @@ function Register() {
             });
 
             if (data.success) {
-                navigate('/login'); // or navigate("/") if you want to redirect to homepage
+                navigate('/login');
             }
         } catch (err) {
             console.log(err);

@@ -1,0 +1,60 @@
+/* Container wrapping the whole rating form */
+.rate-form-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f1f1f1;  /* same as your other form sections */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title styling */
+.rate-form-container h4 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.rate-form-container label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Number input and textarea */
+.rate-form-container input[type="number"],
+.rate-form-container textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Textarea specific */
+.rate-form-container textarea {
+  min-height: 80px;
+}
+
+/* Submit button */
+.rate-form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;  /* your button blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rate-form-container button:hover {
+  background-color: #0056b3;
+}
