@@ -97,7 +97,6 @@ router.get('/technicians', async (req, res) => {
 
 
 
-// In routes/user.js
 router.post('/become-technician', async (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ success: false, message: 'Not logged in' });
@@ -108,6 +107,13 @@ router.post('/become-technician', async (req, res) => {
 
   try {
     const result = await DB.becomeTechnician(userId, category);
+
+    // Update session to reflect technician status
+    req.session.user.isTechnician = true;
+    req.session.user.category = category;
+    // Optionally also save technicianId or other data if you want
+    req.session.user.technicianId = result.insertId;
+
     res.json({ 
       success: true, 
       message: 'You are now a technician!',
@@ -127,6 +133,7 @@ router.post('/become-technician', async (req, res) => {
     });
   }
 });
+
 
 // POST /user/request-service
 router.post('/request-service', async (req, res) => {
