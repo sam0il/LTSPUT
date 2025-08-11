@@ -2,7 +2,8 @@
 const express = require('express')
 const app = express();
 const PORT = 5022;
-
+const fs = require('fs');
+const https = require('https');
 
 const cors = require('cors')
 const path = require('path')
@@ -24,7 +25,7 @@ const DB = require('./config/db.js')
 app.use(express.urlencoded({extended : true}))
 // cors
 app.use(cors({
-  origin: 'http://88.200.63.148:3022', 
+  origin: ['http://88.200.63.148:3022', 'https://student.famnit.upr.si'],  
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
   credentials: true
 }));
@@ -42,9 +43,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    secure: false,
+    secure: true,
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
@@ -61,5 +62,13 @@ app.get('/api/test', (req, res) => {
 const technicianRoutes = require('./routes/technician');
 app.use('/technician', technicianRoutes);
 
+
+
+const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+}
+
 // Start server
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+//app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+https.createServer(options, app).listen(PORT, () => console.log(`https server listening on port ${PORT}`));

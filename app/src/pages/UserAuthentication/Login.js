@@ -15,7 +15,7 @@ function Login() {
 
         if (data.success) {
             localStorage.setItem("user", JSON.stringify(data.user));
-            navigate("/");
+            navigate("/home");
         } else {
             alert(data.message);
         }

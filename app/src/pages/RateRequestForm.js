@@ -19,7 +19,7 @@ const RateRequestForm = ({ requestId, userId, onRated }) => {
       
       if (onRated) onRated();
 
-      navigate('/');  // Redirect to homepage after submitting rating
+      navigate('/home');  
     } catch (err) {
       console.error("Failed to submit rating:", err);
     }
